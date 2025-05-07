@@ -1,4 +1,5 @@
 using JwtAspnet;
+using JwtAspnet.Extensions;
 using JwtAspnet.Models;
 using JwtAspnet.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -47,11 +48,11 @@ app.MapGet("/login", (TokenService service)
 
 app.MapGet("/restrito", (ClaimsPrincipal user) => new
 {
-    id = user.FindFirst("id")?.Value,
-    name = user.FindFirst(ClaimTypes.Name)?.Value,
-    email = user.FindFirst(ClaimTypes.Email)?.Value,
-    givenName = user.FindFirst(ClaimTypes.GivenName)?.Value,
-    image = user.FindFirst("image")?.Value
+    id = user.GetId(),
+    name = user.GetName(),
+    email = user.GetEmail(),
+    givenName = user.GetGivenName(),
+    image = user.GetImage()
 })
     .RequireAuthorization();
 
